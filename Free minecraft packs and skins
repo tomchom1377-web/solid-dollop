@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phone Scanner | Simulation</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 24px 16px;
+  background: #050807;
+  color: #00ff88;
+  font-family: monospace;
+  text-align: center;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 24px 18px;
+  border: 1px solid #00ff8855;
+  border-radius: 16px;
+  background: #07100c;
+  box-shadow: 0 0 25px #00ff8815;
+}
+
+h1 {
+  font-size: 27px;
+  text-shadow: 0 0 12px #00ff88;
+}
+
+.subtitle {
+  color: #8abda4;
+  font-size: 13px;
+}
+
+.badge {
+  display: inline-block;
+  margin: 14px 0;
+  padding: 7px 12px;
+  border: 1px solid #00ff88;
+  border-radius: 20px;
+  font-size: 11px;
+}
+
+.screen {
+  margin: 20px 0;
+  padding: 15px;
+  min-height: 180px;
+  text-align: left;
+  background: #020503;
+  border: 1px solid #164c31;
+  border-radius: 8px;
+  overflow-wrap: anywhere;
+}
+
+#output {
+  line-height: 1.8;
+  font-size: 13px;
+}
+
+.progress {
+  height: 12px;
+  margin: 18px 0;
+  background: #173021;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+#bar {
+  height: 100%;
+  width: 0%;
+  background: #00ff88;
+  box-shadow: 0 0 12px #00ff88;
+  transition: width 0.25s;
+}
+
+#percent {
+  font-size: 13px;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  background: #00ff88;
+  color: #001b0d;
+  font-family: monospace;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+}
+
+#result {
+  margin-top: 20px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.note {
+  margin-top: 24px;
+  color: #789486;
+  font-size: 11px;
+  line-height: 1.7;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+  <h1>PHONE SCANNER</h1>
+  <p class="subtitle">ADVANCED SECURITY INTERFACE</p>
+
+  <div class="badge">● SIMULATION MODE</div>
+
+  <div class="screen">
+    <div id="output">> System ready...<br>
+      > Waiting to start simulation
+    </div>
+  </div>
+
+  <div class="progress">
+    <div id="bar"></div>
+  </div>
+
+  <div id="percent">0%</div>
+
+  <br><br>
+  <button id="start" onclick="startScan()">
+    ▶ START SIMULATION
+  </button>
+
+  <div id="result"></div>
+
+  <p class="note">
+    DEMO ONLY — NO DEVICE ACCESS<br>
+    This page does not scan phones or collect personal information.
+  </p>
+</div>
+
+<script>
+let running = false;
+
+function startScan() {
+  if (running) return;
+  running = true;
+
+  const output = document.getElementById("output");
+  const bar = document.getElementById("bar");
+  const percent = document.getElementById("percent");
+  const result = document.getElementById("result");
+  const button = document.getElementById("start");
+
+  const messages = [
+    "Initializing demo...",
+    "Loading visual interface...",
+    "Checking fictional security systems...",
+    "Analyzing simulated network...",
+    "Running animation sequence...",
+    "Simulation progress: 60%",
+    "Simulation progress: 85%",
+    "Simulation complete!"
+  ];
+
+  let i = 0;
+  let progress = 0;
+
+  output.innerHTML = "";
+  result.textContent = "";
+  button.disabled = true;
+  button.textContent = "SCANNING...";
+
+  const timer = setInterval(() => {
+    progress = Math.min(progress + 2, 100);
+    bar.style.width = progress + "%";
+    percent.textContent = progress + "%";
+
+    if (progress % 14 === 0 && i < messages.length) {
+      output.innerHTML += "> " + messages[i] + "<br>";
+      i++;
+      output.scrollTop = output.scrollHeight;
+    }
+
+    if (progress >= 100) {
+      clearInterval(timer);
+
+      output.innerHTML +=
+        "> ACCESS GRANTED 😎<br>" +
+        "> DEMO COMPLETE — NO DEVICE ACCESS";
+
+      result.textContent = "ACCESS GRANTED";
+      result.style.textShadow = "0 0 15px #00ff88";
+
+      button.disabled = false;
+      button.textContent = "↻ RUN AGAIN";
+      running = false;
+    }
+  }, 100);
+}
+</script>
+</body>
+</html>
